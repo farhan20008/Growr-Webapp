@@ -5,9 +5,11 @@ import { cn } from '@/lib/utils';
 const navItems = [
   { path: '/', icon: Home, label: 'Home' },
   { path: '/meals', icon: Utensils, label: 'Meals' },
+  { path: '/scan', icon: ScanLine, label: 'Scan' },
   { path: '/workout', icon: Dumbbell, label: 'Workout' },
   { path: '/water', icon: Droplets, label: 'Water' },
   { path: '/progress', icon: TrendingUp, label: 'Progress' },
+  { path: '/profile', icon: User, label: 'Profile' },
 ];
 
 export default function BottomNav() {
