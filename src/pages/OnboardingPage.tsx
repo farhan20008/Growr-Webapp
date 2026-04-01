@@ -74,18 +74,20 @@ export default function OnboardingPage() {
   const [name, setName] = useState('');
   const [weight, setWeight] = useState('');
   const [calorieGoal, setCalorieGoal] = useState('');
+  const [proteinGoal, setProteinGoal] = useState('');
   const navigate = useNavigate();
   const slide = slides[current];
   const isLast = current === slides.length - 1;
   const isForm = slide.isForm;
 
-  const formValid = name.trim().length > 0 && Number(weight) > 0 && Number(calorieGoal) > 0;
+  const formValid = name.trim().length > 0 && Number(weight) > 0 && Number(calorieGoal) > 0 && Number(proteinGoal) > 0;
 
   const complete = () => {
     const profile = {
       name: name.trim() || 'User',
       currentWeight: Number(weight) || 68,
       calorieGoal: Number(calorieGoal) || 2400,
+      proteinGoal: Number(proteinGoal) || 130,
     };
     localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
     localStorage.setItem(ONBOARDING_KEY, 'true');
@@ -163,6 +165,18 @@ export default function OnboardingPage() {
                   className="h-12 rounded-xl"
                   min={1200}
                   max={5000}
+                />
+              </div>
+              <div>
+                <label className="text-sm font-medium text-foreground mb-1.5 block">Daily protein goal (g)</label>
+                <Input
+                  type="number"
+                  placeholder="e.g. 130"
+                  value={proteinGoal}
+                  onChange={e => setProteinGoal(e.target.value)}
+                  className="h-12 rounded-xl"
+                  min={30}
+                  max={400}
                 />
               </div>
             </div>
