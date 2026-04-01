@@ -1,12 +1,13 @@
 import { useState, useCallback, useEffect } from 'react';
 import { MealEntry, WaterEntry, Exercise, defaultMeals, workoutPlan, userProfile } from '@/data/mockData';
+import { getOnboardingProfile } from '@/pages/OnboardingPage';
 
 const STORAGE_KEY = 'growr-data';
 
 interface AppState {
   meals: MealEntry[];
   waterEntries: WaterEntry[];
-  workoutState: Record<string, number[]>; // exerciseId -> completedSets indices
+  workoutState: Record<string, number[]>;
   profile: typeof userProfile;
 }
 
@@ -15,6 +16,17 @@ function loadState(): AppState {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) return JSON.parse(saved);
   } catch {}
+
+  const onboarding = getOnboardingProfile();
+  const profile = {
+    ...userProfile,
+    ...(onboarding ? {
+      name: onboarding.name,
+      currentWeight: onboarding.currentWeight,
+      calorieGoal: onboarding.calorieGoal,
+    } : {}),
+  };
+
   return {
     meals: defaultMeals,
     waterEntries: [
@@ -25,7 +37,7 @@ function loadState(): AppState {
       { amount: 250, timestamp: new Date().toISOString() },
     ],
     workoutState: {},
-    profile: userProfile,
+    profile,
   };
 }
 

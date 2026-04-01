@@ -1,14 +1,25 @@
 import { User, Target, Wallet, Dumbbell, Droplets, Utensils, Moon, Bell, ChevronRight } from 'lucide-react';
 import { userProfile } from '@/data/mockData';
+import { getOnboardingProfile } from '@/pages/OnboardingPage';
+
+const onboarding = getOnboardingProfile();
+const profile = {
+  ...userProfile,
+  ...(onboarding ? {
+    name: onboarding.name,
+    currentWeight: onboarding.currentWeight,
+    calorieGoal: onboarding.calorieGoal,
+  } : {}),
+};
 
 const settingsSections = [
   {
     title: 'Goals',
     items: [
-      { icon: Target, label: 'Daily Calorie Goal', value: `${userProfile.calorieGoal} cal` },
-      { icon: Target, label: 'Daily Protein Goal', value: `${userProfile.proteinGoal}g` },
-      { icon: Droplets, label: 'Daily Water Goal', value: `${userProfile.waterGoal / 1000}L` },
-      { icon: Target, label: 'Goal Weight', value: `${userProfile.goalWeight}kg` },
+      { icon: Target, label: 'Daily Calorie Goal', value: `${profile.calorieGoal} cal` },
+      { icon: Target, label: 'Daily Protein Goal', value: `${profile.proteinGoal}g` },
+      { icon: Droplets, label: 'Daily Water Goal', value: `${profile.waterGoal / 1000}L` },
+      { icon: Target, label: 'Goal Weight', value: `${profile.goalWeight}kg` },
     ],
   },
   {
@@ -37,17 +48,17 @@ export default function ProfilePage() {
           <User className="h-8 w-8 text-primary" />
         </div>
         <div>
-          <h1 className="text-xl font-bold font-heading text-foreground">Profile</h1>
-          <p className="text-sm text-muted-foreground">{userProfile.currentWeight}kg · Lean bulk</p>
+          <h1 className="text-xl font-bold font-heading text-foreground">{profile.name}</h1>
+          <p className="text-sm text-muted-foreground">{profile.currentWeight}kg · Lean bulk</p>
         </div>
       </div>
 
       {/* Current Stats */}
       <div className="grid grid-cols-3 gap-3">
         {[
-          { label: 'Current', value: `${userProfile.currentWeight}kg` },
-          { label: 'Goal', value: `${userProfile.goalWeight}kg` },
-          { label: 'To go', value: `+${(userProfile.goalWeight - userProfile.currentWeight).toFixed(1)}kg` },
+          { label: 'Current', value: `${profile.currentWeight}kg` },
+          { label: 'Goal', value: `${profile.goalWeight}kg` },
+          { label: 'To go', value: `+${(profile.goalWeight - profile.currentWeight).toFixed(1)}kg` },
         ].map(s => (
           <div key={s.label} className="rounded-2xl bg-card p-3 shadow-sm text-center">
             <p className="text-lg font-bold font-heading text-foreground">{s.value}</p>
