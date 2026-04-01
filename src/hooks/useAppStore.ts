@@ -24,6 +24,7 @@ function loadState(): AppState {
       name: onboarding.name,
       currentWeight: onboarding.currentWeight,
       calorieGoal: onboarding.calorieGoal,
+      proteinGoal: onboarding.proteinGoal ?? userProfile.proteinGoal,
     } : {}),
   };
 
